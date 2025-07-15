@@ -52,7 +52,7 @@ pipeline{
         stage("Docker Build & Push"){
             steps{
                 script{
-                   withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
+                   withDockerRegistry(credentialsId: 'docker'){   
                        sh "docker build -t hotstar ."
                        sh "docker tag hotstar cletusadodo/hotstar:latest "
                        sh "docker push cletusadodo/hotstar:latest "
