@@ -31,7 +31,7 @@ pipeline {
               | cut -d '"' -f 4 | wget -qi -
               tar -xvf gitleaks*_linux_x64.tar.gz
               chmod +x gitleaks
-              mv gitleaks /usr/local/bin/
+              sudo mv gitleaks /usr/local/bin/
           fi
 
           # Run scan & save report
