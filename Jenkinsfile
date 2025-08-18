@@ -24,7 +24,7 @@ pipeline {
                 sh '''
                   echo "Running Gitleaks Secret Scan..."
                   # Scan repo and do not fail pipeline if secrets found
-                  gitleaks detect --source . --report-path gitleaks-report.json --exit-code 0
+                  gitleaks detect --source . --report-path gitleaks-report.json --exit-code 1
                 '''
             }
         }
