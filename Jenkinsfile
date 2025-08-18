@@ -20,25 +20,25 @@ pipeline {
         }
 
         stage('Gitleaks Scan') {
-            steps {
-                sh '''
-                  echo "Running Gitleaks Secret Scan..."
-                  if ! command -v gitleaks &> /dev/null
-                  then
-                      echo "Installing Gitleaks..."
-                      curl -s https://api.github.com/repos/gitleaks/gitleaks/releases/latest \
-                      | grep "browser_download_url.*linux.*64" \
-                      | cut -d '"' -f 4 | wget -qi -
-                      tar -xvf gitleaks*.tar.gz
-                      sudo mv gitleaks /usr/local/bin/
-                  fi
-                  
-                  # Run scan & save report
-                  gitleaks detect --source . --report-path gitleaks-report.json --exit-code 1
-                '''
-            }
-        }
+    steps {
+        sh '''
+          echo "Running Gitleaks Secret Scan..."
+          if ! command -v gitleaks &> /dev/null
+          then
+              echo "Installing Gitleaks..."
+              curl -s https://api.github.com/repos/gitleaks/gitleaks/releases/latest \
+              | grep "browser_download_url.*linux_x64.tar.gz" \
+              | cut -d '"' -f 4 | wget -qi -
+              tar -xvf gitleaks*_linux_x64.tar.gz
+              chmod +x gitleaks
+              mv gitleaks /usr/local/bin/
+          fi
 
+          # Run scan & save report
+          gitleaks detect --source . --report-path gitleaks-report.json --exit-code 1
+        '''
+    }
+}
         stage("Sonarqube Analysis ") {
             steps {
                 withSonarQubeEnv('SonarQube') {
