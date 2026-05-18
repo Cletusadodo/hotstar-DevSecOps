@@ -5,15 +5,15 @@ function Row({title,fetchUrl}) {
 const [allMovies,setAllMovies]=useState([])
 console.log(fetchUrl);
 const base_url="https://image.tmdb.org/t/p/original/"
-
-const fetchData=async()=>{
-   const {data}= await tmdbAxiosInstance.get(fetchUrl)
-   setAllMovies(data.results)
-}
 console.log(allMovies);
 useEffect(()=>{
+    const fetchData = async () => {
+       const {data}= await tmdbAxiosInstance.get(fetchUrl)
+       setAllMovies(data.results)
+    }
+
     fetchData()
-},[])
+},[fetchUrl])
 
   return (
     <div className='row'>
@@ -23,10 +23,9 @@ useEffect(()=>{
             {
 
                 allMovies.map((item,index)=>(
-                    <>
+                    <div className='ba' key={item.id ?? `${item.original_title}-${index}`}>
                     
                     
-                    <div className='ba'>
                        <div className='iim'> <img className='movie' src={`${base_url}/${item.poster_path}`} alt="" />
                         
                             <div className='back'>
@@ -51,8 +50,7 @@ useEffect(()=>{
             
                                 </div>
                                 </div>
-                        </div>
-                    </>
+                    </div>
                 ))
             }
            
