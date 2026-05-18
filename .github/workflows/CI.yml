@@ -38,3 +38,9 @@ jobs:
 
       - name: Build application
         run: npm run build --if-present
+      - name: Upload build artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-build
+          path: build
